@@ -45,7 +45,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
     });
   }
 
-  /// Handles operator button presses (+, -, *, /).
+  /// Handles operation button presses (+, -, *, /).
   void _onOperatorPressed(String op) {
     setState(() {
       // Convert current display text to first operand
@@ -53,5 +53,69 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
       _operator = op;
       // Reset display to prepare for second operand
       _displayText = '0';
+    });
+  }
+
+  /// Handles = and does the math
+  void _onEqualsPressed() {
+    setState(() {
+      _secondOperand = double.tryParse(_displayText);
+
+      if (_firstOperand == null || _secondOperand == null || _operator.isEmpty) {
+        // If something is missing, do nothing or handle gracefully
+        return;
+      }
+
+      double result = 0;
+      switch (_operator) {
+        case '+':
+          result = _firstOperand! + _secondOperand!;
+          break;
+        case '-':
+          result = _firstOperand! - _secondOperand!;
+          break;
+        case '*':
+          result = _firstOperand! * _secondOperand!;
+          break;
+        case '/':
+          if (_secondOperand == 0) {
+            // Handle divide by zero case
+            _displayText = 'Error';
+            _firstOperand = null;
+            _secondOperand = null;
+            _operator = '';
+            return;
+          } else {
+            result = _firstOperand! / _secondOperand!;
+          }
+          break;
+        default:
+          break;
+      }
+      // Update display with result
+      _displayText = _formatResult(result);
+      // Reset for next calculation
+      _firstOperand = null;
+      _secondOperand = null;
+      _operator = '';
+    });
+  }
+
+  /// Formatting for correct decimal placement
+  String _formatResult(double value) {
+    if (value % 1 == 0) {
+      return value.toInt().toString();
+    } else {
+      return value.toString();
+    }
+  }
+
+  /// Clear to clear the calculator of any numbers
+  void _onClearPressed() {
+    setState(() {
+      _displayText = '0';
+      _operator = '';
+      _firstOperand = null;
+      _secondOperand = null;
     });
   }
