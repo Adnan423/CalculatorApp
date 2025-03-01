@@ -44,3 +44,14 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
       }
     });
   }
+
+  /// Handles operator button presses (+, -, *, /).
+  void _onOperatorPressed(String op) {
+    setState(() {
+      // Convert current display text to first operand
+      _firstOperand = double.tryParse(_displayText);
+      _operator = op;
+      // Reset display to prepare for second operand
+      _displayText = '0';
+    });
+  }
