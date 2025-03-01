@@ -119,3 +119,23 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
       _secondOperand = null;
     });
   }
+
+  /// Calculator button with text and a callback
+  Widget _buildButton(String text, Color color, VoidCallback onPressed) {
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.all(4.0),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: color,                // Button’s background color
+            foregroundColor: Colors.white,         // Text color
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            textStyle: const TextStyle(fontSize: 24),
+          ),
+          onPressed: onPressed,
+          child: Text(text),
+        ),
+      ),
+    );
+  }
+
