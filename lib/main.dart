@@ -139,6 +139,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
     );
   }
 
+  ///Buttons for the calculator
   @override
   Widget build(BuildContext context) {
     return Scaffold(
